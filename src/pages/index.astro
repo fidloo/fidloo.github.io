@@ -1,0 +1,21 @@
+---
+import Grid from "@/components/grid.astro";
+import PageHeader from "@/components/page-header.astro";
+import { navMenuConfig } from "@/config/nav-menu";
+import MainLayout from "@/layouts/main-layout.astro";
+
+const apps = navMenuConfig.apps[0].items;
+---
+
+<MainLayout title="">
+  <div class="bg-background-200">
+    <section class="container py-12">
+      <PageHeader
+        heading="Apps"
+        text="Explore all the apps we have built for you."
+      />
+
+      <Grid items={apps} />
+    </section>
+  </div>
+</MainLayout>

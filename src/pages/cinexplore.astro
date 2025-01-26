@@ -1,0 +1,18 @@
+---
+import Features from "@/components/sections/features.astro";
+import AppHeader from "@/components/sections/app-header.astro";
+import Testimonials from "@/components/sections/testimonials.astro";
+
+import { getAppData } from "@/config/apps";
+import MainLayout from "@/layouts/main-layout.astro";
+import { App } from "@/types/enums";
+
+const appData = getAppData(App.Cinexplore);
+
+---
+
+<MainLayout title={appData.title}>
+  <AppHeader data={appData} />
+  <Features data={appData} />
+  <Testimonials testimonials={appData.testimonials} />
+</MainLayout>

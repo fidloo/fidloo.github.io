@@ -1,0 +1,35 @@
+---
+import Callout from "@/components/callout.astro";
+import { DashboardTableOfContents } from "@/components/toc";
+import { getTableOfContents } from "@/lib/toc";
+import { formatDate } from "@/lib/utils";
+import type { CollectionEntry } from "astro:content";
+import DocsLayout from "@/layouts/docs-layout.astro";
+
+type Props = CollectionEntry<"policies">;
+
+const policy = Astro.props;
+const slug = policy.slug;
+const { title, description, pubDate } = policy.data;
+const toc = await getTableOfContents(policy.body);
+---
+
+<DocsLayout title={title} description={description}>
+  <main class="container max-w-5xl py-6 lg:grid lg:grid-cols-[1fr_300px] lg:gap-10 lg:py-10 xl:gap-20">
+    <article class="prose dark:prose-invert max-w-none">
+      <h1 class="font-heading text-4xl my-4" transition:name={"title-" + slug}>
+        {title}
+      </h1>
+      <hr class="my-6" />
+      <Callout icon="💡" type="info">Last updated {formatDate(pubDate)}.</Callout>
+      <slot />
+
+      <hr class="flex md:hidden my-4" />
+    </article>
+    <div class="hidden text-sm lg:block">
+      <div class="sticky top-18 -mt-10 max-h-[calc(var(--vh)-4rem)] overflow-y-auto pt-10" transition:animate="slide">
+        <DashboardTableOfContents toc={toc} client:load />
+      </div>
+    </div>
+  </main>
+</DocsLayout>

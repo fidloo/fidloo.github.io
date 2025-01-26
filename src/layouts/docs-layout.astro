@@ -1,0 +1,38 @@
+---
+import Footer from "@/components/layout/footer.astro";
+import Header from "@/components/layout/header.astro";
+import { MainNavigationMenu } from "@/components/main-navigation-menu";
+import BaseLayout from "@/layouts/base-layout.astro";
+import { SheetMobileNav } from "@/components/layout/sheet-mobile-nav";
+import { navMenuConfig } from "@/config/nav-menu";
+import { ThemeToggle } from "@/components/theme-toggle";
+
+type Props = {
+  title: string;
+  description: string;
+};
+
+const { title, description } = Astro.props;
+---
+
+<BaseLayout title={title} description={description}>
+  <Header className="border-b">
+    <MainNavigationMenu slot="left-header" client:load />
+    <SheetMobileNav
+      mainNavItems={[...navMenuConfig.links]}
+      sidebarNavItems={[
+        ...navMenuConfig.apps,
+      ]}
+      slot="mobile-nav-header"
+      client:load
+    />
+
+    <div class="flex items-center gap-x-4" slot="right-header">
+      <ThemeToggle client:load />
+    </div>
+  </Header>
+
+  <slot />
+
+  <Footer className="border-t" />
+</BaseLayout>
