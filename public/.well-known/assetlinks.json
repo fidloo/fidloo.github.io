@@ -1,0 +1,39 @@
+[
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.fidloo.sudoku.demo.debug",
+      "sha256_cert_fingerprints": [
+        "84:F1:2F:40:C7:B4:E1:CD:84:ED:EA:06:6D:BF:89:28:F8:43:65:2D:C6:21:E2:8F:8C:58:CA:64:A2:05:DB:01"
+      ]
+    }
+  },
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.fidloo.cinexplore",
+      "sha256_cert_fingerprints": [
+        "60:A8:E6:51:56:21:0D:5F:B0:6B:5C:77:41:43:E5:57:2C:5D:01:44:B9:76:9B:42:CE:AC:17:37:33:D1:03:BF",
+        "0D:36:CF:E6:2C:9C:04:06:E9:64:57:50:A2:D9:60:07:3A:05:79:72:E6:1B:37:65:49:47:F8:2A:1E:61:82:E4"
+      ]
+    }
+  },
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.fidloo.cinexplore.debug",
+      "sha256_cert_fingerprints": [
+        "84:F1:2F:40:C7:B4:E1:CD:84:ED:EA:06:6D:BF:89:28:F8:43:65:2D:C6:21:E2:8F:8C:58:CA:64:A2:05:DB:01"
+      ]
+    }
+  }
+]
