@@ -1,0 +1,18 @@
+---
+import PolicyDocument from "@/components/sections/policy-document.astro";
+import { appPolicies, getAppPolicy } from "@/config/policies";
+
+export function getStaticPaths() {
+  return Object.keys(appPolicies).map((app) => ({
+    params: { app },
+  }));
+}
+
+const app = getAppPolicy(Astro.params.app ?? "");
+
+if (!app) {
+  return Astro.redirect("/cinexplore/terms-of-use", 302);
+}
+---
+
+<PolicyDocument app={app} policyType="terms-of-use" />

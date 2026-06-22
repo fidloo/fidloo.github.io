@@ -1,0 +1,248 @@
+---
+import Callout from "@/components/callout.astro";
+import { DashboardTableOfContents } from "@/components/toc";
+import { getPolicyDescription, getPolicyTitle } from "@/config/policies";
+import type { AppPolicy, PolicySection, PolicyType } from "@/config/policies";
+import { formatDate } from "@/lib/utils";
+import DocsLayout from "@/layouts/docs-layout.astro";
+import type { TableOfContents } from "@/lib/toc";
+
+type Props = {
+  app: AppPolicy;
+  policyType: PolicyType;
+};
+
+const { app, policyType } = Astro.props;
+const title = getPolicyTitle(policyType);
+const description = getPolicyDescription(policyType, app.appName);
+const pageTitle = `${app.appName} ${title}`;
+
+const privacySections: PolicySection[] = [
+  {
+    id: "information-collection-and-use",
+    title: "Information Collection and Use",
+    paragraphs: [
+      "For a better experience, while using our Service, we may require you to provide us with certain personally identifiable information. The information that we request will be retained on your device and is not collected by us in any way.",
+      "The app does use third party services that may collect information used to identify you.",
+    ],
+  },
+  {
+    id: "log-data",
+    title: "Log Data",
+    paragraphs: [
+      "We want to inform you that whenever you use our Service, in a case of an error in the app we collect data and information through third party products on your phone called Log Data. This Log Data may include information such as your device Internet Protocol address, device name, operating system version, the configuration of the app when utilizing our Service, the time and date of your use of the Service, and other statistics.",
+    ],
+  },
+  {
+    id: "cookies",
+    title: "Cookies",
+    paragraphs: [
+      "Cookies are files with a small amount of data that are commonly used as anonymous unique identifiers. These are sent to your browser from the websites that you visit and are stored on your device's internal memory.",
+      "This Service does not use these cookies explicitly. However, the app may use third party code and libraries that use cookies to collect information and improve their services. You have the option to either accept or refuse these cookies and know when a cookie is being sent to your device. If you choose to refuse our cookies, you may not be able to use some portions of this Service.",
+    ],
+  },
+  {
+    id: "service-providers",
+    title: "Service Providers",
+    paragraphs: [
+      "We may employ third-party companies and individuals due to the following reasons:",
+      "We want to inform users of this Service that these third parties have access to your Personal Information. The reason is to perform the tasks assigned to them on our behalf. However, they are obligated not to disclose or use the information for any other purpose.",
+    ],
+    bullets: [
+      "To facilitate our Service.",
+      "To provide the Service on our behalf.",
+      "To perform Service-related services.",
+      "To assist us in analyzing how our Service is used.",
+    ],
+  },
+  {
+    id: "security",
+    title: "Security",
+    paragraphs: [
+      "We value your trust in providing us your Personal Information, thus we are striving to use commercially acceptable means of protecting it. But remember that no method of transmission over the internet, or method of electronic storage is fully secure and reliable, and we cannot guarantee its absolute security.",
+    ],
+  },
+  {
+    id: "links-to-other-sites",
+    title: "Links to Other Sites",
+    paragraphs: [
+      "This Service may contain links to other sites. If you click on a third-party link, you will be directed to that site. Note that these external sites are not operated by us. Therefore, we strongly advise you to review the Privacy Policy of these websites. We have no control over and assume no responsibility for the content, privacy policies, or practices of any third-party sites or services.",
+    ],
+  },
+  ...(app.hasAffiliateLinks
+    ? [
+        {
+          id: "affiliates-disclaimer",
+          title: "Affiliates disclaimer",
+          paragraphs: [
+            "Our mobile application may contain links to affiliate websites, and we receive an affiliate commission for any purchases made by you on the affiliate website using such links. We are a participant in the Amazon Services LLC Associates Program, an affiliate advertising program designed to provide a means for us to earn advertising fees by linking to Amazon.com and affiliated websites.",
+          ],
+        },
+      ]
+    : []),
+  {
+    id: "changes-to-this-privacy-policy",
+    title: "Changes to This Privacy Policy",
+    paragraphs: [
+      "We may update our Privacy Policy from time to time. Thus, you are advised to review this page periodically for any changes. We will notify you of any changes by posting the new Privacy Policy on this page. These changes are effective immediately after they are posted on this page.",
+    ],
+  },
+  {
+    id: "contact",
+    title: "Contact",
+    paragraphs: [
+      `If you have any questions or suggestions about our Privacy Policy, do not hesitate to contact us by email at ${app.contactEmail}.`,
+    ],
+  },
+];
+
+const termsSections: PolicySection[] = [
+  {
+    id: "terms",
+    title: "Terms",
+    paragraphs: [
+      `By accessing our app, ${app.appName}, you are agreeing to be bound by these terms of service, all applicable laws and regulations, and agree that you are responsible for compliance with any applicable local laws. If you do not agree with any of these terms, you are prohibited from using or accessing ${app.appName}. The materials contained in ${app.appName} are protected by applicable copyright and trademark law.`,
+    ],
+  },
+  {
+    id: "use-license",
+    title: "Use License",
+    paragraphs: [
+      `Permission is granted to temporarily download one copy of ${app.appName} per device for personal, non-commercial transitory viewing only. This is the grant of a license, not a transfer of title.`,
+    ],
+    bullets: [
+      "Modify or copy the materials.",
+      "Use the materials for any commercial purpose, or for any public display.",
+      `Attempt to decompile or reverse engineer any software contained in ${app.appName}.`,
+      "Remove any copyright or other proprietary notations from the materials.",
+      "Transfer the materials to another person or mirror the materials on any other server.",
+    ],
+  },
+  {
+    id: "disclaimer",
+    title: "Disclaimer",
+    paragraphs: [
+      `The materials within ${app.appName} are provided on an as-is basis. ${app.publisherName} makes no warranties, expressed or implied, and disclaims all other warranties including implied warranties or conditions of merchantability, fitness for a particular purpose, or non-infringement.`,
+    ],
+  },
+  {
+    id: "limitations",
+    title: "Limitations",
+    paragraphs: [
+      `In no event shall ${app.publisherName} or its suppliers be liable for any damages arising out of the use or inability to use ${app.appName}, even if ${app.publisherName} or an authorized representative has been notified orally or in writing of the possibility of such damage.`,
+    ],
+  },
+  {
+    id: "accuracy-of-materials",
+    title: "Accuracy of materials",
+    paragraphs: [
+      `The materials appearing in ${app.appName} could include technical, typographical, or photographic errors. ${app.publisherName} does not warrant that any of the materials are accurate, complete or current.`,
+    ],
+  },
+  {
+    id: "in-app-purchases",
+    title: "In-App Purchases",
+    paragraphs: [
+      "If you purchase an auto-renewing periodic subscription through the Service, your Google Play Store account will be billed continuously for the subscription until you terminate it through your Google Play Store account.",
+      `In the Service, you may purchase Virtual Items with real world money, such as a limited, personal, non-transferable, non-sublicensable, revocable ${app.terms.premiumItemName} license, solely for use in the Service.`,
+      `${app.appName} may manage, regulate, control, modify, or eliminate Virtual Items at any time, with or without notice. The transfer of Virtual Items is prohibited except where expressly authorized in the Service.`,
+      `You agree to pay all fees and applicable taxes incurred by you or anyone using a ${app.appName} account registered to you.`,
+    ],
+  },
+  {
+    id: "links",
+    title: "Links",
+    paragraphs: [
+      `${app.publisherName} has not reviewed all the sites linked to its app and is not responsible for the contents of any such linked site. The inclusion of any link does not imply endorsement by ${app.publisherName} of the site.`,
+    ],
+  },
+  {
+    id: "modifications",
+    title: "Modifications",
+    paragraphs: [
+      `${app.publisherName} may revise these terms of service for its app at any time without notice. By using ${app.appName} you are agreeing to be bound by the then current version of these terms of service.`,
+    ],
+  },
+  {
+    id: "governing-law",
+    title: "Governing Law",
+    paragraphs: [
+      "These terms and conditions are governed by and construed in accordance with the laws of France and you irrevocably submit to the exclusive jurisdiction of the courts in that State or location.",
+    ],
+  },
+];
+
+const sections = policyType === "privacy-policy" ? privacySections : termsSections;
+const toc: TableOfContents = {
+  items: sections.map((section) => ({
+    title: section.title,
+    url: `#${section.id}`,
+  })),
+};
+---
+
+<DocsLayout title={pageTitle} description={description}>
+  <main class="container max-w-5xl py-6 lg:grid lg:grid-cols-[1fr_300px] lg:gap-10 lg:py-10 xl:gap-20">
+    <article class="prose dark:prose-invert max-w-none">
+      <h1 class="font-heading text-4xl my-4">{pageTitle}</h1>
+      <hr class="my-6" />
+      <Callout type="info">Last updated {formatDate(app.lastUpdated)}.</Callout>
+
+      {
+        policyType === "privacy-policy" ? (
+          <>
+            <p>
+              {app.publisherName} built the {app.appName} app as a {app.serviceCost} app.
+              This SERVICE is provided by {app.publisherName} and is intended for use as is.
+            </p>
+            <p>
+              This page is used to inform visitors regarding our policies with the collection,
+              use, and disclosure of Personal Information if anyone decided to use the Service.
+            </p>
+            <p>
+              If you choose to use our Service, then you agree to the collection and use of
+              information in relation to this policy. The Personal Information that we collect is
+              used for providing and improving the Service. We will not use or share your
+              information with anyone except as described in this Privacy Policy.
+            </p>
+          </>
+        ) : null
+      }
+
+      {
+        sections.map((section) => (
+          <section>
+            <h2 id={section.id}>{section.title}</h2>
+            {section.paragraphs?.map((paragraph) => <p>{paragraph}</p>)}
+            {section.id === "information-collection-and-use" && app.thirdPartyServices.length > 0 && (
+              <>
+                <p>Link to privacy policy of third party service providers used by the app:</p>
+                <ul>
+                  {app.thirdPartyServices.map((service) => (
+                    <li>
+                      <a href={service.href}>{service.title}</a>
+                    </li>
+                  ))}
+                </ul>
+              </>
+            )}
+            {section.bullets && (
+              <ul>
+                {section.bullets.map((item) => (
+                  <li>{item}</li>
+                ))}
+              </ul>
+            )}
+          </section>
+        ))
+      }
+
+      <hr class="flex md:hidden my-4" />
+    </article>
+    <div class="hidden text-sm lg:block">
+      <div class="sticky top-18 -mt-10 max-h-[calc(var(--vh)-4rem)] overflow-y-auto pt-10" transition:animate="slide">
+        <DashboardTableOfContents toc={toc} client:load />
+      </div>
+    </div>
+  </main>
+</DocsLayout>

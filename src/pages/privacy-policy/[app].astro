@@ -1,0 +1,11 @@
+---
+import { appPolicies } from "@/config/policies";
+
+export function getStaticPaths() {
+  return Object.keys(appPolicies).map((app) => ({
+    params: { app },
+  }));
+}
+
+return Astro.redirect(`/${Astro.params.app}/privacy-policy`, 301);
+---

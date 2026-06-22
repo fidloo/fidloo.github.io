@@ -10,8 +10,8 @@ export const footerLinks: SidebarNavItem[] = [
   {
     title: "Terms & policies",
     items: [
-      { title: "Privacy Policy", href: "/privacy-policy", },
-      { title: "Terms of Use", href: "/terms-of-use", },
+      { title: "Privacy Policy", href: "/cinexplore/privacy-policy", },
+      { title: "Terms of Use", href: "/cinexplore/terms-of-use", },
     ],
   },
 ];

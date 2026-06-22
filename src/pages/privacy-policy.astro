@@ -1,16 +1,3 @@
 ---
-import { MdxComponents } from "@/components/content/mdx-components";
-import PolicyLayout from "@/layouts/policy.astro";
-
-import {type CollectionEntry, getEntry} from "astro:content";
-
-const policy = await getEntry("policies", "privacy-policy");
-
-type Props = CollectionEntry<"policies">;
-const { Content } = await policy.render();
-
+return Astro.redirect("/cinexplore/privacy-policy", 301);
 ---
-
-<PolicyLayout {...policy}>
-    <Content components={MdxComponents} />
-</PolicyLayout>
