@@ -18,8 +18,8 @@ const {data} = Astro.props;
 
         <Image
                 class="object-cover object-center p-4"
-                src="/images/cinexplore_logo.svg"
-                alt="preview landing"
+                src={data.logo}
+                alt={`${data.title} logo`}
                 width={140}
                 height={140}
                 loading="eager"

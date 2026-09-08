@@ -52,6 +52,7 @@ export const cinexploreAppData: AppData = {
     overview: "Discover and manage TV Shows & Movies and keep track of what you're watching.",
     description: "Cinexplore is a user-friendly Android application designed to help users discover and track movies, TV shows, and actors that match their tastes.",
     url: "https://play.google.com/store/apps/details?id=com.fidloo.cinexplore",
+    logo: "/images/cinexplore_logo.svg",
     testimonials: testimonials,
     features: features,
 }

@@ -67,6 +67,7 @@ export type AppData = {
     description: string;
     overview: string;
     url: string;
+    logo: string;
     testimonials: string[];
     features: Feature[];
 }
